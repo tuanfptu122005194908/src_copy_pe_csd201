@@ -4,7 +4,7 @@
  */
  
  /*Table content to search*/
- 
+ /* 
  ||____ADD______//add last
  ||	||______//add first
  ||     ||______//add many
@@ -47,6 +47,9 @@
  ||       ||____//reverse list
  ||       ||____//append another list
  ||       ||____//change name first
+ ||       ||____//get size
+ */
+
 
  
  
@@ -493,3 +496,14 @@
          }
 	}
 }
+
+//get size
+	public int size(){
+		int count = 0;
+		Node p = head;
+		while(p != null){
+			count++;
+			p = p.next;
+		}
+		return count;
+	}
