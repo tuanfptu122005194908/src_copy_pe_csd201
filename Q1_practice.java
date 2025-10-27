@@ -34,6 +34,7 @@
  ||     ||______//sort by integer/ double
  ||     ||______//sort by for
  ||     ||______//sort 3 first element 
+ ||     ||______//sort tu node p to node q
  ||
  ||___SWAP______//swap min max
  ||     ||______//swap node max second with node min first
@@ -381,6 +382,25 @@
             pi = pi.next; if(count == 2) break;
         }
     }
+
+// sort tu node p to node q
+	public void sortFromPToQ(Node p, Node q){
+		if (p != null && q != null) {
+            Node pi = p;
+            while (pi != null && pi != q.next) {
+                Node pj = pi.next;
+                while (pj != null && pj != q.next) {
+                    if (pi.info.wing > pj.info.wing) {
+                        Canary temp = pi.info;
+                        pi.info = pj.info;
+                        pj.info = temp;
+                    }
+                    pj = pj.next;
+                }
+                pi = pi.next;
+            }
+        }
+	}
 	
 //swap min max
 	public void swapMinMax(){
