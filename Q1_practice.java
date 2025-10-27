@@ -156,22 +156,27 @@
 	
 //search node with depth max
 	public Node searchDepthMax(){
-		if(isEmpty()) return null;
-		 if (head != null) {
-            Node maxDepthNode = head;
-            int maxDepth = head.info.depth;
 
-            Node tmp = head.next;
-            while (tmp != null) {
-                if (tmp.info.depth > maxDepth) {
-                    maxDepth = tmp.info.depth;
-                    maxDepthNode = tmp;
-                }
-                tmp = tmp.next;
-            }
-			return maxDepthNode;
+    if (isEmpty()) { 
+        return null;
+    } 
+    
+   
+    Node maxDepthNode = head;
+    int maxDepth = head.info.depth;
+
+    Node tmp = head.next;
+    while (tmp != null) {
+      
+        if (tmp.info.depth > maxDepth) {
+            maxDepth = tmp.info.depth;
+            maxDepthNode = tmp;
         }
-	}
+        tmp = tmp.next;
+    }
+    
+    return maxDepthNode;
+}
 //delete node
 	public void dele(Node q){
 		Node f,p; f=null;p=head;
