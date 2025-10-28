@@ -39,6 +39,7 @@
  ||
  ||___SWAP______//swap min max
  ||     ||______//swap node max second with node min first
+ ||     ||______//swap 2 node 
  ||
  ||___GET_______//get node at index k
  ||    ||_______//get node max
@@ -452,6 +453,16 @@
 		min.info= temp;
 	}
      
+    //swap 2 node
+    public void swapTwoNode(int k, int h){
+        if(k == h) return;
+        Node pk = getNode(k);
+        Node ph = getNode(h);
+        if(pk == null || ph == null) return;
+        Person temp = pk.info;
+        pk.info = ph.info;
+        ph.info = temp;
+    }
 //get node at index k
 	public Node getNode(int k) {
         int c = 0;
