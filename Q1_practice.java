@@ -13,6 +13,8 @@
  ||
  ||___INSERT____//insert position k
  ||       ||____//insert after position k
+ ||       ||____//Insert before node có value X
+ ||       ||____//Insert vitri trung tam
  ||
  ||___SEARCH____//search node
  ||       ||____//search node with string
@@ -125,7 +127,59 @@
         p.next = p1.next;
         p1.next = p; 
     }
-	
+
+//Insert before node có value X
+	public void insertBeforePositionK(int k, Person c) {
+    if (k <= 0 || head == null) {
+        addFirst(c);
+        return;
+    }
+
+    int count = 0;
+    Node p = head;
+    while (p.next != null && count < k - 1) {
+        p = p.next;
+        count++;
+    }
+
+    Node newNode = new Node(c);
+    newNode.next = p.next;
+    p.next = newNode;
+}
+
+//Insert vitri trung tam
+    public void insertMiddle(Person c) {
+    if (head == null) {
+        addFirst(c);
+        return;
+    }
+
+    int count = 0;
+    Node p = head;
+    while (p != null) {
+        count++;
+        p = p.next;
+    }
+
+    int middle = count / 2;
+    Node newNode = new Node(c);
+
+    if (middle == 0) {
+        addFirst(c);
+        return;
+    }
+
+    p = head;
+    int i = 0;
+    while (p != null && i < middle - 1) {
+        p = p.next;
+        i++;
+    }
+
+    newNode.next = p.next;
+    p.next = newNode;
+}
+
 //search node
 	public Node search(int x{
 		Node p = head;
@@ -340,6 +394,8 @@
         }
         if(imax < n) remove(imax);
     } 
+
+
 	 
 //sort by string
     public void sort(){
