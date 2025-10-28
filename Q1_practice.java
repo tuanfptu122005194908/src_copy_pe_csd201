@@ -454,12 +454,12 @@
 	}
      
     //swap 2 node
-    public void swapTwoNode(int k, int h){
-        if(k == h) return;
-        Node pk = getNode(k);
-        Node ph = getNode(h);
-        if(pk == null || ph == null) return;
-        Person temp = pk.info;
+     public void swapTwoNode(Node pk, Node ph) {
+
+        if (pk == null || ph == null) {
+            return;
+        }
+        Cala temp = pk.info;
         pk.info = ph.info;
         ph.info = temp;
     }
