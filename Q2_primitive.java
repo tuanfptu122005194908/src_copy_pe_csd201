@@ -13,18 +13,36 @@ BSTree
     }
 	
 //insert a key x to the tree
-    public void insert(int x) 
-    {Node p = new Node(x);
-     Node f = null, q = root;
-     while(q != null) {
-      if(q.info == x) {System.out.println("Key cannot be duplicated...");return;}
-      if(q.info < x) {f = q; q = q.right;}
-      else {f = q; q = q.left;}
-     }
-    if(f == null) root = p;
-    else if(p.info > f.info) f.right = p;
-    else f.left = p;
+    public void insert(Cala x) 
+     Cala x = new Cala(xOwner, xHorn, xColor);
+    Node p = new Node(x);
+
+    if (root == null) {
+        root = p;
+        return;
     }
+
+    Node f = null;
+    Node q = root;
+
+    while (q != null) {
+        if (q.info.horn == xHorn) {
+            return;
+        }
+        f = q;
+        if (xHorn < q.info.horn) {
+            q = q.left;
+        } else {
+            q = q.right;
+        }
+    }
+
+    if (xHorn < f.info.horn) {
+        f.left = p;
+    } else {
+        f.right = p;
+    }
+}
 	
 //preorder a tree
     public void preOrder(Node p) {
