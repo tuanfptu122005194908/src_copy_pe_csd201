@@ -851,7 +851,7 @@ public Node getNodeAtPositionWithLeftChild(int k) {
 
 // get node at position k have right child pre-order traversal
 public Node getNodeAtPositionWithRightChild_Preorder(int k) {
-    count = 0; // biến toàn cục hoặc truyền tham số
+    count = 0; 
     return getNodePreorder(root, k);
 }
 
@@ -861,7 +861,7 @@ private Node getNodePreorder(Node p, int k) {
     if (p == null)
         return null;
 
-    // Kiểm tra node hiện tại có right child không
+    
     if (p.right != null) {
         count++;
         if (count == k) {
@@ -869,18 +869,18 @@ private Node getNodePreorder(Node p, int k) {
         }
     }
 
-    // Duyệt trái trước
+   
     Node leftResult = getNodePreorder(p.left, k);
     if (leftResult != null)
         return leftResult;
 
-    // Sau đó duyệt phải
+    
     return getNodePreorder(p.right, k);
 }
 
 // get node at position k have left child pre-order traversal
 public Node getNodeAtPositionWithLeftChild_Preorder(int k) {
-    count = 0; // biến toàn cục hoặc truyền tham số
+    count = 0; 
     return getNodePreorder_Left(root, k);
 }
 
@@ -888,7 +888,7 @@ private Node getNodePreorder_Left(Node p, int k) {
     if (p == null)
         return null;
 
-    // Kiểm tra node hiện tại có left child không
+   
     if (p.left != null) {
         count++;
         if (count == k) {
@@ -896,18 +896,18 @@ private Node getNodePreorder_Left(Node p, int k) {
         }
     }
 
-    // Duyệt trái trước
+  
     Node leftResult = getNodePreorder_Left(p.left, k);
     if (leftResult != null)
         return leftResult;
 
-    // Sau đó duyệt phải
+   
     return getNodePreorder_Left(p.right, k);
 }
 
 // get node at position k have right child post-order traversal
 public Node getNodeAtPositionWithRightChild_Postorder(int k) {
-    count = 0; // biến toàn cục hoặc truyền tham số
+    count = 0; 
     return getNodePostorder(root, k);
 }
 
@@ -915,17 +915,16 @@ private Node getNodePostorder(Node p, int k) {
     if (p == null)
         return null;
 
-    // Duyệt trái trước
     Node leftResult = getNodePostorder(p.left, k);
     if (leftResult != null)
         return leftResult;
 
-    // Sau đó duyệt phải
+    
     Node rightResult = getNodePostorder(p.right, k);
     if (rightResult != null)
         return rightResult;
 
-    // Kiểm tra node hiện tại có right child không
+   
     if (p.right != null) {
         count++;
         if (count == k) {
@@ -938,22 +937,22 @@ private Node getNodePostorder(Node p, int k) {
 
 // get node at position k have left child post-order traversal
 public Node getNodeAtPositionWithLeftChild_Postorder(int k) {
-    count = 0; // biến toàn cục hoặc truyền tham số
+    count = 0; 
     return getNodePostorder_Left(root, k);
 }
 
 private Node getNodePostorder_Left(Node p, int k) {
     if (p == null)
         return null;
-    // Duyệt trái trước
+   
     Node leftResult = getNodePostorder_Left(p.left, k);
     if (leftResult != null)
         return leftResult;
-    // Sau đó duyệt phải
+   
     Node rightResult = getNodePostorder_Left(p.right, k);
     if (rightResult != null)
         return rightResult;
-    // Kiểm tra node hiện tại có left child không
+   
     if (p.left != null) {
         count++;
         if (count == k) {
@@ -963,54 +962,70 @@ private Node getNodePostorder_Left(Node p, int k) {
     return null;
 }
 
-// get node at position k have right child inorder traversal
+
 public Node getNodeAtPositionWithRightChild_Inorder(int k) {
-    count = 0; // biến toàn cục hoặc truyền tham số
+    count = 0;
     return getNodeInorder(root, k);
 }
 
 private Node getNodeInorder(Node p, int k) {
     if (p == null)
         return null;
-    // Duyệt trái trước
+
     Node leftResult = getNodeInorder(p.left, k);
     if (leftResult != null)
         return leftResult;
-    // Kiểm tra node hiện tại có right child không
+ 
     if (p.right != null) {
         count++;
         if (count == k) {
             return p;
         }
     }
-    // Sau đó duyệt phải
+  
     return getNodeInorder(p.right, k);
 }
 
 // get node at position k have left child inorder traversal
 public Node getNodeAtPositionWithLeftChild_Inorder(int k) {
-    count = 0; // biến toàn cục hoặc truyền tham số
+    count = 0; 
     return getNodeInorder_Left(root, k);
 }
 
 private Node getNodeInorder_Left(Node p, int k) {
     if (p == null)
         return null;
-    // Duyệt trái trước
+ 
     Node leftResult = getNodeInorder_Left(p.left, k);
     if (leftResult != null)
         return leftResult;
-    // Kiểm tra node hiện tại có left child không
+  
     if (p.left != null) {
         count++;
         if (count == k) {
             return p;
         }
     }
-    // Sau đó duyệt phải
+ 
     return getNodeInorder_Left(p.right, k);
 }
 
+// xu ly cac bai toan su dung getNodeAtPositionWithLeftChild_Postorder
+{Node p = getNodeAtPositionWithLeftChild_Postorder(2);
+        if (p != null && p.left != null) {
+            Node father = getFather(p);
+            Node q = rotateRight(p);
+            if (father == null) {
+                root = q;
+            } else {
+                if (p.info.step < father.info.step) {
+                    father.left = q;
+                } else {
+                    father.right = q;
+                }
+            }
+        }
+    }
 // calculate level of node
 public void calLevel(Node p) {
     if (p == null) {
