@@ -32,6 +32,7 @@ import java.util.Queue;
  * || ||______//delete by copy string
  * || ||______//delete by node p
  * || ||______//delete by merging by node p
+ * || ||______//delete node co gia tri depth max
  * ||
  * ||___BALANCE___//balance tree
  * || ||______//balance simple array list
@@ -647,6 +648,20 @@ public void deleteByMerging(Node p) {
         }
     }
 }
+
+// delete node co gia tri depth max
+public void deleteNodeDepthMax() {
+    if (root == null) {
+        return;
+    }
+    Node deepestNode = getDeepestNode(root);
+    if (deepestNode != null) {
+        deleteByCopy(deepestNode);
+    }
+}
+
+
+
 
 // balance tree
 public void balance(ArrayList a, int first, int last) {
