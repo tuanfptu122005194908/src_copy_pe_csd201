@@ -46,6 +46,10 @@ import java.util.Queue;
  * || ||____//get node by integer/double
  * || ||____//get node father by node child
  * || ||____//get node in position k
+ * || ||____// get node at position k by breadth-first traversal
+ * || ||____// get node at position k by pere-order traversal
+ * || ||____// get node at position k by post-order traversal
+ * || ||____// get node at position k by inorder traversal
  * || ||____// get node at position k have right child breadth-first traversal
  * || ||____// get node at position k have left child breadth-first traversal
  * || ||____// get node at position k have right child pre-order traversal
@@ -54,6 +58,7 @@ import java.util.Queue;
  * || ||____// get node at position k have left child post-order traversal
  * || ||____// get node at position k have right child inorder traversal
  * || ||____// get node at position k have left child inorder traversal
+ * || ||__// xu ly cac bai toan su dung getNodeAtPositionWithLeftChild_Postorder
  * ||___OTHER_____//calculate level of node
  * || ||_____//calculate factor
  * || ||_____//copy all node to tree by inorder traversal
@@ -796,6 +801,82 @@ public Node getNodeAtPosition(int k) {
     }
     return null; // If k is greater than the number of nodes
 }
+
+// get node at position k by breadth-first traversal
+public Node getNodeAtPosition_BreadthFirst(int k) {
+    if (k < 1 || root == null) {
+        return null; // Invalid position or empty tree
+    }
+    MyQueue m = new MyQueue();
+    m.enqueue(root);
+    int count = 0;
+    while (!m.isEmpty()) {
+        Node q = (Node) m.dequeue();
+        count++;
+        if (count == k) {
+            return q; // Found the node at position k
+        }
+        if (q.left != null) {
+            m.enqueue(q.left);
+        }
+        if (q.right != null) {
+            m.enqueue(q.right);
+        }
+    }
+    return null; // If k is greater than the number of nodes
+}
+// get node at position k by pere-order traversal
+public Node getNodeAtPosition_Preorder(int k) {
+    count = 0; 
+    return getNodePreorder(root, k);
+}
+private Node getNodeAtPosition_Preorder_Helper(Node p, int k) {
+    if (p == null) return null;
+
+    count++;
+    if (count == k) return p;
+
+    Node left = getNodeAtPosition_Preorder_Helper(p.left, k);
+    if (left != null) return left;
+
+    return getNodeAtPosition_Preorder_Helper(p.right, k);
+}
+// get node at position k by post-order traversal
+public Node getNodeAtPosition_Postorder(int k) {
+    count = 0; 
+    return getNodePostorder(root, k);
+}
+private Node getNodeAtPosition_Postorder_Helper(Node p, int k) {
+    if (p == null) return null;
+
+    Node left = getNodeAtPosition_Postorder_Helper(p.left, k);
+    if (left != null) return left;
+
+    Node right = getNodeAtPosition_Postorder_Helper(p.right, k);
+    if (right != null) return right;
+
+    count++;
+    if (count == k) return p;
+
+    return null;
+}
+// get node at position k by inorder traversal
+public Node getNodeAtPosition_Inorder(int k) {
+    count = 0; 
+    return getNodeInorder(root, k);
+}
+private Node getNodeAtPosition_Inorder_Helper(Node p, int k) {
+    if (p == null) return null;
+
+    Node left = getNodeAtPosition_Inorder_Helper(p.left, k);
+    if (left != null) return left;
+
+    count++;
+    if (count == k) return p;
+
+    return getNodeAtPosition_Inorder_Helper(p.right, k);
+}
+
 
 // get node at position k have right child breadth-first traversal
 public Node getNodeAtPositionWithRightChild(int k) {
