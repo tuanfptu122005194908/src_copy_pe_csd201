@@ -59,6 +59,10 @@ import java.util.Queue;
  * || ||____// get node at position k have right child inorder traversal
  * || ||____// get node at position k have left child inorder traversal
  * || ||__// xu ly cac bai toan su dung getNodeAtPositionWithLeftChild_Postorder
+ * || ||____// get node have depth max breadth-first traversal
+ * || ||____// get node have depth max pre-order traversal
+ * || ||____// get node have depth max post-order traversal
+ * || ||____// get node have depth max inorder traversal
  * ||___OTHER_____//calculate level of node
  * || ||_____//calculate factor
  * || ||_____//copy all node to tree by inorder traversal
@@ -1107,6 +1111,70 @@ private Node getNodeInorder_Left(Node p, int k) {
             }
         }
     }
+
+    //get node have depth max breadth-first traversal
+    Node getDeepestNode(Node p) {
+    if (p == null) return null;
+    MyQueue q = new MyQueue();
+    q.enqueue(p);
+    Node res = p;
+    while (!q.isEmpty()) {
+        Node r = (Node) q.dequeue();
+        res = r; // Node cuối cùng của BFS là node sâu nhất
+        if (r.left != null) q.enqueue(r.left);
+        if (r.right != null) q.enqueue(r.right);
+    }
+    return res;
+}
+// get node have depth max pre-order traversal
+Node deepest = null;
+int maxDepth = -1;
+
+void findDeepestPreOrder(Node p, int level) {
+    if (p == null) return;
+    
+   
+    if (level > maxDepth) {
+        maxDepth = level;
+        deepest = p;
+    }
+
+    findDeepestPreOrder(p.left, level + 1);
+    findDeepestPreOrder(p.right, level + 1);
+}
+
+// get node have depth max post-order traversal
+Node deepest = null;
+int maxDepth = -1;
+
+void findDeepestPostOrder(Node p, int level) {
+    if (p == null) return;
+   
+    findDeepestPostOrder(p.left, level + 1);
+ 
+    findDeepestPostOrder(p.right, level + 1);
+    
+    if (level > maxDepth) {
+        maxDepth = level;
+        deepest = p;
+    }
+}
+
+// get node have depth max inorder traversal
+Node deepest = null;
+int maxDepth = -1;
+void findDeepestInOrder(Node p, int level) {
+    if (p == null) return;
+   
+    findDeepestInOrder(p.left, level + 1);
+  
+    if (level > maxDepth) {
+        maxDepth = level;
+        deepest = p;
+    }
+
+    findDeepestInOrder(p.right, level + 1);
+}
 // calculate level of node
 public void calLevel(Node p) {
     if (p == null) {
