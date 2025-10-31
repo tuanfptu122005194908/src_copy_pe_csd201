@@ -22,6 +22,7 @@ import java.util.Queue;
  * || ||____//search by string
  * || ||____//search by integer/double
  * || ||____//search by index k
+ * || ||____// Tìm node có depth lớn nhất trong subtree có root là p
  * ||
  * ||___COUNT_____//count node in tree
  * || ||____//count node have 1 child
@@ -285,6 +286,25 @@ public Node searchByIndex(Node p, int k) {
     return null; // If k is greater than the number of nodes
 }
 
+// Tìm node có depth lớn nhất trong subtree có root là p
+ode getDeepestNodeInSubtree(Node p) {
+    if (p == null) return null;
+    Queue q = new Queue();
+    q.enqueue(p);
+    Node deepest = p;
+    int maxDepth = p.info.depth;
+    
+    while (!q.isEmpty()) {
+        Node r = (Node) q.dequeue();
+        if (r.info.depth > maxDepth) {
+            maxDepth = r.info.depth;
+            deepest = r;
+        }
+        if (r.left != null) q.enqueue(r.left);
+        if (r.right != null) q.enqueue(r.right);
+    }
+    return deepest;
+}
 // count node in tree
 public int count(Node p) {
     if (p == null)
