@@ -46,6 +46,8 @@ import java.util.Queue;
  * || ||____//get node by integer/double
  * || ||____//get node father by node child
  * || ||____//get node in position k
+ * || ||____// get node at position k have right child
+ * || ||____// get node at position k have left child
  * ||___OTHER_____//calculate level of node
  * || ||_____//calculate factor
  * || ||_____//copy all node to tree by inorder traversal
@@ -787,6 +789,58 @@ public Node getNodeAtPosition(int k) {
         }
     }
     return null; // If k is greater than the number of nodes
+}
+
+// get node at position k have right child
+public Node getNodeAtPositionWithRightChild(int k) {
+    if (k < 1 || root == null) {
+        return null; // Invalid position or empty tree
+    }
+    MyQueue m = new MyQueue();
+    m.enqueue(root);
+    int count = 0;
+    while (!m.isEmpty()) {
+        Node q = (Node) m.dequeue();
+        if (q.right != null) { // Check if the node has a right child
+            count++;
+            if (count == k) {
+                return q; // Found the node at position k with right child
+            }
+        }
+        if (q.left != null) {
+            m.enqueue(q.left);
+        }
+        if (q.right != null) {
+            m.enqueue(q.right);
+        }
+    }
+    return null; // If k is greater than the number of nodes with right child
+}
+
+// get node at position k have left child
+public Node getNodeAtPositionWithLeftChild(int k) {
+    if (k < 1 || root == null) {
+        return null; // Invalid position or empty tree
+    }
+    MyQueue m = new MyQueue();
+    m.enqueue(root);
+    int count = 0;
+    while (!m.isEmpty()) {
+        Node q = (Node) m.dequeue();
+        if (q.left != null) { // Check if the node has a left child
+            count++;
+            if (count == k) {
+                return q; // Found the node at position k with left child
+            }
+        }
+        if (q.left != null) {
+            m.enqueue(q.left);
+        }
+        if (q.right != null) {
+            m.enqueue(q.right);
+        }
+    }
+    return null; // If k is greater than the number of nodes with left child
 }
 
 // calculate level of node
