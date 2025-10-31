@@ -1,3 +1,7 @@
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.Queue;
+
 /**
  *
  * @author Tuan va Quan
@@ -27,6 +31,7 @@
  * ||___DELETE____//delete by copy integer/double
  * || ||______//delete by copy string
  * || ||______//delete by node p
+ * || ||______//delete by merging by node p
  * ||
  * ||___BALANCE___//balance tree
  * || ||______//balance simple array list
@@ -40,6 +45,7 @@
  * || ||____//get node by string
  * || ||____//get node by integer/double
  * || ||____//get node father by node child
+ * || ||____//get node in position k
  * ||___OTHER_____//calculate level of node
  * || ||_____//calculate factor
  * || ||_____//copy all node to tree by inorder traversal
@@ -555,6 +561,76 @@ public void deleteByCopy(Node p) {
     }
 }
 
+// delete by merging by node p
+public void deleteByMerging(Node p) {
+    if (isEmpty()) {
+        return;
+    }
+    if (p == null) {
+        System.out.println("Key does not exists, deletion failed");
+        return;
+    }
+    // Find Node f where f is father of p
+    Node f = null;
+    Node q = root;
+    while (q != p) {
+        if (q.info.name.compareTo(p.info.name) > 0) { // Changed
+            f = q;
+            q = q.left;
+        } else {
+            f = q;
+            q = q.right;
+        }
+    }
+    // 1. p is a leaf (no right and left child)
+    if (p.left == null && p.right == null) {
+        // a BST has a Node only
+        if (f == null) {
+            root = null;
+        } else if (f.left == p) {
+            f.left = null;
+        } else if (f.right == p) {
+            f.right = null;
+        }
+    }
+    // 2. p has a left child only
+    else if (p.left != null && p.right == null) {
+        if (f == null) {// remove root
+            root = p.left;
+        } else if (f.right == p) {
+            f.right = p.left;
+        } else if (f.left == p) {
+            f.left = p.left;
+        }
+    }
+    // 3. p has a right child only
+    else if (p.right != null && p.left == null) {
+        if (f == null) {// remove root
+            root = p.right;
+        } else if (f.right == p) {
+            f.right = p.right;
+        } else if (f.left == p) {
+            f.left = p.right;
+        }
+    }
+    // 4. Both of right and left child
+    else if (p.left != null && p.right != null) {
+        Node q1 = p.left;
+
+        while (q1.right != null) {
+            q1 = q1.right;
+        }
+        q1.right = p.right;
+        if (f == null) {// remove root
+            root = p.left;
+        } else if (f.left == p) {
+            f.left = p.left;
+        } else if (f.right == p) {
+            f.right = p.left;
+        }
+    }
+}
+
 // balance tree
 public void balance(ArrayList a, int first, int last) {
     if (first > last)
@@ -687,6 +763,30 @@ public Node getFather(Node child) {
         }
     }
     return father;
+}
+
+// get node in position k
+public Node getNodeAtPosition(int k) {
+    if (k < 1 || root == null) {
+        return null; // Invalid position or empty tree
+    }
+    MyQueue m = new MyQueue();
+    m.enqueue(root);
+    int count = 0;
+    while (!m.isEmpty()) {
+        Node q = (Node) m.dequeue();
+        count++;
+        if (count == k) {
+            return q; // Found the node at position k
+        }
+        if (q.left != null) {
+            m.enqueue(q.left);
+        }
+        if (q.right != null) {
+            m.enqueue(q.right);
+        }
+    }
+    return null; // If k is greater than the number of nodes
 }
 
 // calculate level of node
